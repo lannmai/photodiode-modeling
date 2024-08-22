@@ -7,16 +7,16 @@ T = 300;
 W = 10^(-5);
 Wdep = 10^(-6);
 Dp = 12*10^(-4);
-Dn = 36*10^(-6);
-tauP = 10^(-6);
+Dn = 36*10^(-4);
+tauP = 10^(-3);
 tauN = 10^(-6);
 alpha = 1*10^5;
-modFreq = 10^7;
 opticalPower = 10^(-3);
 Ephoton = 1.37*1.6*10^(-19);
 xP = W;
 xN = W+Wdep;
-tMax = tauP;
+tMax = 0.1tauP;
+laserPtoCurrent = 10;
 
 G[x_,t_] := (-alpha)*Exp[-alpha*x] * (opticalPower/Ephoton)*(1+Sin[modFreq*t]);
 
@@ -37,13 +37,6 @@ excessP[x_,t_] = delp[x,t]/.sol1;
 currentDenP[x_,t_] = -q*(Dp)*D[excessP[x,t], {x,1}];
 
 
-Plot[excessP[xP,t], {t,0,tMax}, 
-PlotRange->All, AxesLabel->{"Time (s)", "Excess hole concentration (1/m^3)"}, PlotStyle->Red]
-
-Plot[currentDenP[xP,t], {t,0,tMax}, 
-PlotRange->All, AxesLabel->{"Time (s)", "Hole current density (A/m^2)"}]
-
-
 (* ::Text:: *)
 (*Solve 1D diffusion PDE analytically for electrons in p-type layer. deln[x,t] is excess electron concentration.*)
 
@@ -60,21 +53,17 @@ excessN[x_,t_] = deln[x,t]/.sol2;
 currentDenN[x_,t_] = q*(Dn)*D[excessN[x,t], {x,1}];
 
 
-Plot[excessN[xN,t], {t,0,tMax}, 
-PlotRange->All, AxesLabel->{"Time (s)", "Excess electron concentration (1/m^3)"}, PlotStyle->Red]
-
-Plot[currentDenN[xN,t], {t,0,tMax}, 
-PlotRange->All, AxesLabel->{"Time (s)", "Electron current density (A/m^2)"}]
-
-
-Plot[(currentDenN[xN,t] + currentDenP[xP,t]), {t,0,tMax}, 
-PlotRange->All, AxesLabel->{"Time (s)", "Current density (A/m^2)"}]
-
-maxCurrentDen = FindMaxValue[currentDenN[xN,t] + currentDenP[xP,t], {t,0}];
-maxMod = FindMaxValue[1+Sin[modFreq*t],{t,0}];
-
-Plot[{(currentDenN[xN,t] + currentDenP[xP,t])/maxCurrentDen, (1+Sin[modFreq*t])/maxMod}, {t,0,tMax}, 
-PlotRange->All, AxesLabel->{"Time (s)", "Normalized magnitude (a.u)"}, PlotLegends->{"Output signal (current density)", "Input signal (modulated optical power)"}]
+currentDen[t_] = currentDenP[xP,t] + currentDenN[xN,t];
+currentDenLP[s_] = LaplaceTransform[currentDen[t], t, s];
+laserCurrent[t_] = opticalPower*laserPtoCurrent;
+laserCurrentLP[s_] = LaplaceTransform[laserCurrent[t], t, s];
 
 
+H[s_] = FullSimplify[currentDenLP[s]/laserCurrentLP[s]]
 
+
+freqRes[modFreq_] = FullSimplify[Sqrt[H[I*2*Pi*modFreq]*H[-I*2*Pi*modFreq]]]
+
+
+LogLinearPlot[20*Log10[freqRes[modFreq]], {modFreq,0,2*10^9}, 
+PlotRange->All]
