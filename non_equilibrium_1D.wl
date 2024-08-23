@@ -1,5 +1,6 @@
 (* ::Package:: *)
 
+ClearAll;
 SetOptions[Plot, BaseStyle -> FontSize -> 14];
 q = 1.6*10^(-19);
 k = 1.38*10^(-23);
@@ -8,11 +9,11 @@ W = 10^(-5);
 Wdep = 10^(-6);
 Dp = 12*10^(-4);
 Dn = 36*10^(-6);
-tauP = 10^(-6);
-tauN = 10^(-6);
+tauP = 10^(-3);
+tauN = 10^(-3);
 alpha = 1*10^5;
 modFreq = 10^7;
-opticalPower = 10^(-3);
+opticalPower = 10^4;
 Ephoton = 1.37*1.6*10^(-19);
 xP = W;
 xN = W+Wdep;
@@ -75,6 +76,3 @@ maxMod = FindMaxValue[1+Sin[modFreq*t],{t,0}];
 
 Plot[{(currentDenN[xN,t] + currentDenP[xP,t])/maxCurrentDen, (1+Sin[modFreq*t])/maxMod}, {t,0,tMax}, 
 PlotRange->All, AxesLabel->{"Time (s)", "Normalized magnitude (a.u)"}, PlotLegends->{"Output signal (current density)", "Input signal (modulated optical power)"}]
-
-
-

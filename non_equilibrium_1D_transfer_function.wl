@@ -1,22 +1,25 @@
 (* ::Package:: *)
 
+ClearAll;
 SetOptions[Plot, BaseStyle -> FontSize -> 14];
 q = 1.6*10^(-19);
 k = 1.38*10^(-23);
 T = 300;
+activeArea = 5*10^(-8);
 W = 10^(-5);
 Wdep = 10^(-6);
 Dp = 12*10^(-4);
 Dn = 36*10^(-4);
 tauP = 10^(-3);
-tauN = 10^(-6);
-alpha = 1*10^5;
-opticalPower = 10^(-3);
-Ephoton = 1.37*1.6*10^(-19);
+tauN = 10^(-3);
+alpha = 2*10^5;
+powerIn = 10*10^(-6);
+opticalPower = powerIn/activeArea;
+Ephoton = 1.65*1.6*10^(-19);
 xP = W;
 xN = W+Wdep;
-tMax = 0.1tauP;
-laserPtoCurrent = 10;
+tMax = tauP;
+impedance = 50;
 
 G[x_,t_] := (-alpha)*Exp[-alpha*x] * (opticalPower/Ephoton)*(1+Sin[modFreq*t]);
 
@@ -53,17 +56,17 @@ excessN[x_,t_] = deln[x,t]/.sol2;
 currentDenN[x_,t_] = q*(Dn)*D[excessN[x,t], {x,1}];
 
 
-currentDen[t_] = currentDenP[xP,t] + currentDenN[xN,t];
-currentDenLP[s_] = LaplaceTransform[currentDen[t], t, s];
-laserCurrent[t_] = opticalPower*laserPtoCurrent;
-laserCurrentLP[s_] = LaplaceTransform[laserCurrent[t], t, s];
+outPower[t_] = ((currentDenP[xP,t] + currentDenN[xN,t])*activeArea)^2*impedance;
+outPowerLP[s_] = LaplaceTransform[outPower[t], t, s];
+inPower[t_] = powerIn;
+inPowerLP[s_] = LaplaceTransform[inPower[t], t, s];
 
 
-H[s_] = FullSimplify[currentDenLP[s]/laserCurrentLP[s]]
+H[s_] = FullSimplify[outPowerLP[s]/inPowerLP[s]];
 
 
-freqRes[modFreq_] = FullSimplify[Sqrt[H[I*2*Pi*modFreq]*H[-I*2*Pi*modFreq]]]
+freqRes[modFreq_] = FullSimplify[Sqrt[H[I*2*Pi*modFreq]*H[-I*2*Pi*modFreq]]];
 
 
-LogLinearPlot[20*Log10[freqRes[modFreq]], {modFreq,0,2*10^9}, 
+LogLinearPlot[Log10[freqRes[modFreq]], {modFreq, 10^6, 4*10^9}, 
 PlotRange->All]
