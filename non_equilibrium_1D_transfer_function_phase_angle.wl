@@ -26,7 +26,7 @@ G[x_, t_] := (-alpha)*Exp[-alpha*x]*(opticalPower/Ephoton)*(1+Sin[modFreq*t]);
 (*Solve 1D diffusion PDE analytically for holes in n-type layer. delp[x,t] is excess hole concentration.*)
 
 
-pde1 = D[delp[x, t], {t, 1}] == (Dp)*D[delp[x, t], {x, 2}] - delp[x, t]/tauP + G[x, t];
+pde1 = D[delp[x, t], {t, 1}] == (Dp)*D[delp[x, t], {x,2}]-delp[x, t]/tauP+G[x, t];
 sol1 = DSolve[{pde1}, delp[x, t], x, t];
 
 
@@ -42,7 +42,7 @@ currentDenP[x_, t_] = -q*(Dp)*D[excessP[x, t], {x, 1}];
 (*Solve 1D diffusion PDE analytically for electrons in p-type layer. deln[x,t] is excess electron concentration.*)
 
 
-pde2 = D[deln[x, t], {t, 1}] == (Dn)*D[deln[x, t], {x, 2}] - deln[x, t]/tauN + G[x, t];
+pde2 = D[deln[x, t], {t, 1}] == (Dn)*D[deln[x, t], {x, 2}]-deln[x, t]/tauN+G[x, t];
 sol2 = DSolve[{pde2}, deln[x, t], x, t];
 
 
@@ -54,7 +54,7 @@ excessN[x_, t_] = deln[x, t]/.sol2;
 currentDenN[x_, t_] = q*(Dn)*D[excessN[x, t], {x, 1}];
 
 
-outPower[t_] = ((currentDenP[xP, t] + currentDenN[xN, t])*activeArea)^2*impedance;
+outPower[t_] = ((currentDenP[xP, t]+currentDenN[xN, t])*activeArea)^2*impedance;
 outPowerLP[s_] = LaplaceTransform[outPower[t], t, s];
 inPower[t_] = powerIn*(1+Sin[modFreq*t]);
 inPowerLP[s_] = LaplaceTransform[inPower[t], t, s];
@@ -63,5 +63,8 @@ inPowerLP[s_] = LaplaceTransform[inPower[t], t, s];
 H[s_] = FullSimplify[outPowerLP[s]/inPowerLP[s]];
 
 
-LogLinearPlot[Log10[Sqrt[H[2*Pi*I*modFreq]*H[-2*Pi*I*modFreq]]], {modFreq, 10^6, 4*10^9}, 
-PlotRange->All, AxesLabel->{"Modulation frequency (Hz)", "dB"}]
+phaseAngle[modFreq_] = FullSimplify[Arg[H[2*Pi*I*modFreq]]];
+
+
+LogLinearPlot[phaseAngle[modFreq]*(180/Pi), {modFreq, 10^6, 4*10^9}, 
+PlotRange->All, AxesLabel->{"Modulation frequency (Hz)", "Phase angle (degrees)"}]
