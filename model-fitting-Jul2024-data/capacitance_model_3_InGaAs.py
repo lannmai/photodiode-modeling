@@ -51,9 +51,11 @@ C_10K_model = ax.plot(V_fine, C_total(V_fine, fit_params[1][0], fit_params[1][1]
 C_30K_model = ax.plot(V_fine, C_total(V_fine, fit_params[2][0], fit_params[2][1], fit_params[2][2]), 'b--')
 C_50K_model = ax.plot(V_fine, C_total(V_fine, fit_params[3][0], fit_params[3][1], fit_params[3][2]), 'c--')
 C_100K_model = ax.plot(V_fine, C_total(V_fine, fit_params[4][0], fit_params[4][1], fit_params[4][2]), 'b--')
-C_300K_model = ax.plot(V_fine, C_total(V_fine, fit_params[5][0], fit_params[4][1], fit_params[5][2]), 'm--')
+C_300K_model = ax.plot(V_fine, C_total(V_fine, fit_params[5][0], fit_params[5][1], fit_params[5][2]), 'm--')
 
 ax.legend(['6K', '10K', '30K', '50K', '100K', '300K'], loc='upper left')
 ax.set_xlabel("Applied reverse bias (V)")
 ax.set_ylabel("Capacitance (F)")
-ax.set_title("Measured (scatter points) and modeled (dashed lines) capacitance of" "\n" "InGaAs photodiode at different temperatures from S22 measurement", loc='center')
+ax.set_title("Measured (scatter points) and modeled (dashed lines) capacitance of" "\n" 
+             "InGaAs photodiode at different temperatures from S22 measurement", loc='center')
+plt.show()
