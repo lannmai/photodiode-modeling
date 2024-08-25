@@ -24,24 +24,6 @@ me = 0.043*elecmass # electron effective mass
 mh = 0.46*elecmass # hole effective mass
 EG = 0.74*q # band gap
 
-def EionD(): 
-    return 13.6*(me/elecmass)*q/eps**2
-
-def EionA(): 
-    return 13.6*(mh/elecmass)*q/eps**2
-
-def NDion(ND, T):
-    return ND/(np.exp((EionD()/2)/(k*T))+1)
-
-def NAion(NA, T):
-    return NA/(np.exp((EionA()/2)/(k*T))+1)
-
-def V0(ND, NA, T):
-    return (k*T/q)*np.log((NDion(ND, T)*NAion(NA, T)/4)*(h**6/(2*np.pi*k*T)**3)*(me*mh)**(-3/2)) + EG/q
-
-def Cj(V, T, ND, NA, A):
-    return (A/2)*np.sqrt(2*q*eps*NDion(ND, T)/(V0(ND, NA, T) - V))
-
 def C_total(V, a, V_0, C_p):
     return a/np.sqrt(V_0-V)+C_p
 
