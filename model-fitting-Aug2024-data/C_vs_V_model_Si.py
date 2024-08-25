@@ -23,10 +23,10 @@ h = scipy.constants.Planck
 pF = 1e-12 # picofarad -> farad
 
 # material properties
-eps = 13.9 # dielectric constant
-me = 0.043*elecmass # electron effective mass
-mh = 0.46*elecmass # hole effective mass
-EG = 0.74*q # band gap
+eps = 11.7 # dielectric constant
+me = 0.2*elecmass # electron effective mass
+mh = 0.49*elecmass # hole effective mass
+EG = 1.12*q # band gap in joules
 
 def C_total(V, a, V_0, C_p):
     return a/np.sqrt(V_0-V)+C_p
@@ -44,21 +44,21 @@ fig, ax = plt.subplots()
 
 V_fine = np.linspace(min(V), max(V), num=400) # finer voltage step for plotting model
 
-C_10K = ax.scatter(V, Capacitance_10K*pF)
-C_30K = ax.scatter(V, Capacitance_30K*pF)
-C_50K = ax.scatter(V, Capacitance_50K*pF)
-C_100K = ax.scatter(V, Capacitance_100K*pF)
-C_150K = ax.scatter(V, Capacitance_150K*pF)
-C_200K = ax.scatter(V, Capacitance_200K*pF)
-C_300K = ax.scatter(V, Capacitance_300K*pF)
+ax.scatter(V, Capacitance_10K*pF)
+ax.scatter(V, Capacitance_30K*pF)
+ax.scatter(V, Capacitance_50K*pF)
+ax.scatter(V, Capacitance_100K*pF)
+ax.scatter(V, Capacitance_150K*pF)
+ax.scatter(V, Capacitance_200K*pF)
+ax.scatter(V, Capacitance_300K*pF)
 
-C_10K_model = ax.plot(V_fine, C_total(V_fine, fit_params[0][0], fit_params[0][1], fit_params[0][2]))
-C_30K_model = ax.plot(V_fine, C_total(V_fine, fit_params[1][0], fit_params[1][1], fit_params[1][2]))
-C_50K_model = ax.plot(V_fine, C_total(V_fine, fit_params[2][0], fit_params[2][1], fit_params[2][2]))
-C_100K_model = ax.plot(V_fine, C_total(V_fine, fit_params[3][0], fit_params[3][1], fit_params[3][2]))
-C_150K_model = ax.plot(V_fine, C_total(V_fine, fit_params[4][0], fit_params[4][1], fit_params[4][2]))
-C_200K_model = ax.plot(V_fine, C_total(V_fine, fit_params[5][0], fit_params[5][1], fit_params[5][2]))
-C_300K_model = ax.plot(V_fine, C_total(V_fine, fit_params[6][0], fit_params[6][1], fit_params[6][2]))
+ax.plot(V_fine, C_total(V_fine, fit_params[0][0], fit_params[0][1], fit_params[0][2]))
+ax.plot(V_fine, C_total(V_fine, fit_params[1][0], fit_params[1][1], fit_params[1][2]))
+ax.plot(V_fine, C_total(V_fine, fit_params[2][0], fit_params[2][1], fit_params[2][2]))
+ax.plot(V_fine, C_total(V_fine, fit_params[3][0], fit_params[3][1], fit_params[3][2]))
+ax.plot(V_fine, C_total(V_fine, fit_params[4][0], fit_params[4][1], fit_params[4][2]))
+ax.plot(V_fine, C_total(V_fine, fit_params[5][0], fit_params[5][1], fit_params[5][2]))
+ax.plot(V_fine, C_total(V_fine, fit_params[6][0], fit_params[6][1], fit_params[6][2]))
 
 ax.legend(['10K', '30K', '50K', '100K', '150K', '200K', '300K'], loc='upper left')
 ax.set_xlabel("Applied reverse bias (V)")

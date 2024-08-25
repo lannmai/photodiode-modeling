@@ -39,17 +39,17 @@ fig, ax = plt.subplots()
 
 V_fine = np.linspace(min(V), max(V), num=400) # finer voltage step for plotting model
 
-C_6K = ax.scatter(V, Capacitance_6K*pF, c='red')
-C_10K = ax.scatter(V, Capacitance_10K*pF, c='green')
-C_30K = ax.scatter(V, Capacitance_30K*pF, c='blue')
-C_77K = ax.scatter(V, Capacitance_77K*pF, c='cyan')
-C_300K = ax.scatter(V, Capacitance_300K*pF, c='magenta')
+ax.scatter(V, Capacitance_6K*pF, c='red')
+ax.scatter(V, Capacitance_10K*pF, c='green')
+ax.scatter(V, Capacitance_30K*pF, c='blue')
+ax.scatter(V, Capacitance_77K*pF, c='cyan')
+ax.scatter(V, Capacitance_300K*pF, c='magenta')
 
-C_6K_model = ax.plot(V_fine, C_total(V_fine, fit_params[0][0], fit_params[0][1], fit_params[0][2]), 'r--')
-C_10K_model = ax.plot(V_fine, C_total(V_fine, fit_params[1][0], fit_params[1][1], fit_params[1][2]), 'g--')
-C_30K_model = ax.plot(V_fine, C_total(V_fine, fit_params[2][0], fit_params[2][1], fit_params[2][2]), 'b--')
-C_77K_model = ax.plot(V_fine, C_total(V_fine, fit_params[3][0], fit_params[3][1], fit_params[3][2]), 'c--')
-C_300K_model = ax.plot(V_fine, C_total(V_fine, fit_params[4][0], fit_params[4][1], fit_params[4][2]), 'm--')
+ax.plot(V_fine, C_total(V_fine, fit_params[0][0], fit_params[0][1], fit_params[0][2]), 'r--')
+ax.plot(V_fine, C_total(V_fine, fit_params[1][0], fit_params[1][1], fit_params[1][2]), 'g--')
+ax.plot(V_fine, C_total(V_fine, fit_params[2][0], fit_params[2][1], fit_params[2][2]), 'b--')
+ax.plot(V_fine, C_total(V_fine, fit_params[3][0], fit_params[3][1], fit_params[3][2]), 'c--')
+ax.plot(V_fine, C_total(V_fine, fit_params[4][0], fit_params[4][1], fit_params[4][2]), 'm--')
 
 ax.legend(['6K', '10K', '30K', '77K', '300K'], loc='upper left')
 ax.set_xlabel("Applied reverse bias (V)")
