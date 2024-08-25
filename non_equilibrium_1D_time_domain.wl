@@ -8,19 +8,19 @@ W = 10^(-5);
 Wdep = 10^(-6);
 Dp = 12*10^(-4);
 Dn = 36*10^(-4);
-tauP = 10^(-5);
+tauP = 10^(-6);
 tauN = 10^(-6);
-alpha = 2*10^5;
+absorptionCoeff = 2*10^5;
 powerIn = 10*10^(-6);
 opticalPower = powerIn/activeArea;
 Ephoton = 1.65*1.6*10^(-19);
-modFreq = 1.8*10^8;
+modFreq = 1*10^8;
 xP = W;
 xN = W+Wdep;
-tMax = 0.01tauP;
+tMax = 0.5*tauP;
 impedance = 50;
 
-G[x_, t_] := (-alpha)*Exp[-alpha*x]*(opticalPower/Ephoton)*(1+Sin[modFreq*t]);
+G[x_, t_] := (-absorptionCoeff)*Exp[-absorptionCoeff*x]*(opticalPower/Ephoton)*(1+Sin[modFreq*t]);
 
 
 (* ::Text:: *)

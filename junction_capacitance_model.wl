@@ -26,25 +26,27 @@ Cj[V_, T_] := (A/2)*Sqrt[2*q*eps*NDion[T]/(V0[T]-V)];
 
 LogLinearPlot[Evaluate@Table[Cj[V, T]*pF, {V, {-4, -3, -2, -1, 0}}],{T, 6, 300}, 
 PlotRange->All, PlotLegends->LineLegend[Table[V, {V, {-4, -3, -2, -1, 0}}], LegendLabel->"Reverse bias (V)"], 
-AxesLabel->{"log T (K)", "Junction capacitance (pF)"}]
+AxesLabel->{"log T (K)", "Junction capacitance (pF)"}, ImageSize->Large]
 
 
 Plot[Evaluate@Table[Cj[V, T]*pF, {T, {4.7, 6, 10, 30, 50, 100}}], {V, -5, 0},
 PlotRange->All, PlotLegends->LineLegend[Table[T, {T, {4.7, 6, 10, 30, 50, 100}}], LegendLabel->"T (K)"], 
-AxesLabel->{"V (V)", "Junction capacitance (pF)"}]
+AxesLabel->{"V (V)", "Junction capacitance (pF)"}, ImageSize->Large]
 
 
 (* ::Text:: *)
 (*Capacitance sensitivity to reverse bias and temperature*)
 
 
-CjV'[V_, T_]=D[Cj[V,T], V];
-CjT'[V_, T_]=D[Cj[V,T], T];
+CjV'[V_, T_]=D[Cj[V, T], V];
+CjT'[V_, T_]=D[Cj[V, T], T];
 
 
 Plot[Evaluate@Table[CjV'[V, T]*pF,{T, {6, 10, 20, 50, 77, 100, 200, 300}}], {V, -5, 0}, 
-PlotLegends->LineLegend[Table[T, {T, {6, 10, 20, 50, 77, 100, 200, 300}}], LegendLabel->"T (K)"], AxesLabel->{"Reverse bias (V)", "Sensitivity (pF/V)"}, PlotRange->All]
+PlotLegends->LineLegend[Table[T, {T, {6, 10, 20, 50, 77, 100, 200, 300}}], LegendLabel->"T (K)"], 
+AxesLabel->{"Reverse bias (V)", "Sensitivity (pF/V)"}, PlotRange->All, ImageSize->Large]
 
 
 LogLinearPlot[Evaluate@Table[CjT'[V, T]*pF, {V, {-4, -3, -2, -1, 0}}], {T, 6, 300},
-PlotLegends->LineLegend[Table[V, {V, {-4, -3, -2, -1, 0}}], LegendLabel->"Reverse bias (V)"], AxesLabel->{"T (K)", "Sensitivity (pF/T)"}, PlotRange->All]
+PlotLegends->LineLegend[Table[V, {V, {-4, -3, -2, -1, 0}}], LegendLabel->"Reverse bias (V)"], 
+AxesLabel->{"T (K)", "Sensitivity (pF/T)"}, PlotRange->All, ImageSize->Large]

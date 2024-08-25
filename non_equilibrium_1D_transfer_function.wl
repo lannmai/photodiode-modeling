@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-SetOptions[LogLinearPlot, BaseStyle -> FontSize -> 14];
+SetOptions[{Plot, LogLinearPlot}, BaseStyle -> FontSize -> 14];
 q = 1.6*10^(-19);
 T = 300;
 activeArea = 5*10^(-8);
@@ -8,18 +8,18 @@ W = 10^(-5);
 Wdep = 10^(-6);
 Dp = 12*10^(-4);
 Dn = 36*10^(-4);
-tauP = 10^(-5);
+tauP = 10^(-6);
 tauN = 10^(-6);
-alpha = 2*10^5;
+absorptionCoeff = 2*10^5;
 powerIn = 10*10^(-6);
 opticalPower = powerIn/activeArea;
 Ephoton = 1.65*1.6*10^(-19);
 xP = W;
 xN = W+Wdep;
-tMax = tauP;
+tMax = 0.5*tauP;
 impedance = 50;
 
-G[x_, t_] := (-alpha)*Exp[-alpha*x]*(opticalPower/Ephoton)*(1+Sin[modFreq*t]);
+G[x_, t_] := (-absorptionCoeff)*Exp[-absorptionCoeff*x]*(opticalPower/Ephoton)*(1+Sin[modFreq*t]);
 
 
 (* ::Text:: *)
@@ -63,5 +63,5 @@ inPowerLP[s_] = LaplaceTransform[inPower[t], t, s];
 H[s_] = FullSimplify[outPowerLP[s]/inPowerLP[s]];
 
 
-LogLinearPlot[Log10[Sqrt[H[2*Pi*I*modFreq]*H[-2*Pi*I*modFreq]]], {modFreq, 10^6, 4*10^9}, 
+LogLinearPlot[Log10[Sqrt[H[2*Pi*I*modFreq]*H[-2*Pi*I*modFreq]]], {modFreq, 10^3, 4*10^9}, 
 PlotRange->All, AxesLabel->{"Modulation frequency (Hz)", "dB"}]
