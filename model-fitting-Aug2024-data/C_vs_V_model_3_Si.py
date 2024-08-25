@@ -60,9 +60,9 @@ C_150K_model = ax.plot(V_fine, C_total(V_fine, fit_params[4][0], fit_params[4][1
 C_200K_model = ax.plot(V_fine, C_total(V_fine, fit_params[5][0], fit_params[5][1], fit_params[5][2]))
 C_300K_model = ax.plot(V_fine, C_total(V_fine, fit_params[6][0], fit_params[6][1], fit_params[6][2]))
 
-ax.legend(['30K', '50K', '150K', '200K', '300K'], loc='upper left')
+ax.legend(['10K', '30K', '50K', '100K', '150K', '200K', '300K'], loc='upper left')
 ax.set_xlabel("Applied reverse bias (V)")
 ax.set_ylabel("Capacitance (F)")
 ax.set_title("Measured (scatter points) and modeled (dashed lines) capacitance of" "\n" 
-             "Si photodiode at different temperatures from S22 measurement", loc='center')
+             "Si photodiode at different reverse bias from S22 measurement", loc='center')
 plt.show()
