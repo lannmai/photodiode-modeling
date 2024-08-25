@@ -43,4 +43,4 @@ Let $b = \exp\left[\frac{E_{\text{ion, D}}}{2 k}\right],$
 $$C(T) = a \sqrt{\frac{1}{c_{1} T + c_{2} T \log T + c_{3}} \frac{N_{D}}{b^{1/T} + 1}} + C_{p},$$
 
 Absorb $N_{D}$ into variable $a$ by re-defining it as $a = \frac{A}{2} \sqrt{2 q \varepsilon N_{D}}.$ Thus,
-$$C(T) = a \left[(c_{1} T + c_{2} T \log T + c_{3}) (1 + b^{1/T})\right]^{-1/2} + C_{p},$$
+$$C(T) = a \left[(c_{1} T + c_{2} T \log T + c_{3}) (1 + b^{1/T})\right]^{-1/2} + C_{p}.$$
